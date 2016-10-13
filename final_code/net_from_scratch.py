@@ -61,7 +61,7 @@ for iter in xrange(60000):
 	count = count + 1
 	ax.plot(delta_output)
 	plt.ylabel('Error')
-	plt.xlabel('Output Index')
+	plt.xlabel('Output Vector Index')
 	plt.draw()
 	plt.pause(1.0/100000000.0)
 
