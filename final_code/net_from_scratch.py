@@ -28,7 +28,6 @@ fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, frameon=False)
 plt.ion()
 plt.show()
-#ax.title('Output Error', color='#afeeee')
 count = 0
 
 for iter in xrange(60000):
