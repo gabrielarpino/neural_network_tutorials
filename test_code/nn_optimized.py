@@ -68,8 +68,7 @@ if __name__ == '__main__':
 
     def print_function(params, iter, gradient):
             train_acc = accuracy(params, inputs, targets)
-            test_acc  = accuracy(params, inputs, targets)
-            print("{:20}|{:20}".format(train_acc, test_acc))
+            print("{:20}".format(train_acc))
 
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.
     optimized_params = adam(objective_grad, init_params, step_size=step_size,
