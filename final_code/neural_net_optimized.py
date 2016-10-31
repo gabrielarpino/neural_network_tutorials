@@ -6,7 +6,7 @@ from autograd.scipy.misc import logsumexp
 from autograd import grad
 from autograd.util import flatten
 from optimizers import adam
-
+import matplotlib.pyplot as plt
 
 def init_random_params(scale, layer_sizes, rs=npr.RandomState(0)):
     """Build a list of (weights, biases) tuples,
@@ -23,7 +23,7 @@ def neural_net_predict(params, inputs):
     for W, b in params:
         outputs = np.dot(inputs, W) + b
         inputs = np.tanh(outputs)
-    return outputs - logsumexp(outputs, axis=1, keepdims=True)
+    return np.tanh(outputs)
 
 def l2_norm(params):
     """Computes l2 norm of params by flattening them into a vector."""
@@ -36,40 +36,44 @@ def log_posterior(params, inputs, targets, L2_reg):
     return log_prior + log_lik
 
 def accuracy(params, inputs, targets):
-    target_class    = np.argmax(targets, axis=1)
-    predicted_class = np.argmax(neural_net_predict(params, inputs), axis=1)
-    return np.mean(predicted_class == target_class)
-
+    target_mean = np.mean(targets)
+    multi = neural_net_predict(params, inputs)*targets
+    multi_mean = np.mean(multi)
+    return (np.absolute((multi_mean - target_mean)))
 
 if __name__ == '__main__':
     # Model parameters
     layer_sizes = [3,4,4,1]
-    L2_reg = 1.0
+    L2_reg = 0.09
 
     # Training parameters
     param_scale = 0.1
     step_size = 0.001
 
     #Define the input arrays x and the desired output array y
-    inputs = np.array([[1,1,0]
-        ,[1,0,0]
+    inputs = np.array([[1,1,-1]
+        ,[1,-1,-1]
         ,[1,1,1]
-        ,[0,1,1]])
-    targets = np.array([[0,0,1,1]]).T
+        ,[-1,1,1]])
+    targets = np.array([[-1,-1,1,1]]).T
 
+    # Randomly initialize the neural net parameters
     init_params = init_random_params(param_scale, layer_sizes)
 
     # Define training objective
     def objective(params, iter):
         return -log_posterior(params, inputs, targets, L2_reg)
 
-    # Get gradient of objective using autograd.
+    # Use autograd to obtain the gradient of the objective function
     objective_grad = grad(objective)
 
+    print("Accuracy:")
     def print_function(params, iter, gradient):
-            train_acc = accuracy(params, inputs, targets)
-            print("{:20}".format(train_acc))
+            # Print the accuracy once every 100 steps
+            if (iter%100 == 0):
+                print(accuracy(params,inputs,targets))
 
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.
     optimized_params = adam(objective_grad, init_params, step_size=step_size,
-                            num_iters=100, callback=print_function)
+                            num_iters=1000, callback=print_function)
+
