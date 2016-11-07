@@ -37,6 +37,7 @@ def log_posterior(params, inputs, targets, L2_reg):
 
 def accuracy(params, inputs, targets):
     target_mean = np.mean(targets)
+    print(neural_net_predict(params, inputs))
     multi = neural_net_predict(params, inputs)*targets
     multi_mean = np.mean(multi)
     return (np.absolute((multi_mean - target_mean)))
