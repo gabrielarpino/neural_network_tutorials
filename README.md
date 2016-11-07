@@ -1,4 +1,4 @@
-# Machine Learning and Neural Networks: As concise as they get
+# Neural Networks: As concise as they get
 
 Machine Learning, being the fascinating field it is, might at times seem un-intuitive and at times even convoluted in its implementation. The aim of this repository is to provide concise neural network implementations and tutorials along with them, in order to facilitate their introduction.
 
