@@ -77,7 +77,7 @@ for iter in xrange(180):
 
 ```
 
-And we are done! After this code has ran, the synapses have been adjusted and the parameters are thefore tuned to reproduce the ouputs specified by the targets. Joining the parts of the code and adding some plotting features, the final code can be viewed [here.](~/final_code/net_from_scratch.py)
+And we are done! After this code has ran, the synapses have been adjusted and the parameters are thefore tuned to reproduce the ouputs specified by the targets. Joining the parts of the code and adding some plotting features, the final code can be viewed [here.](../final_code/net_from_scratch.py)
 
 Error for this neural network was plotted for every input, showing that the error (the difference between the neural network's prediction and the target values) goes to zero for all four inputs. The plot is displayed with Error on the Y-axis and Output Vector Index on the X-axis:
 
