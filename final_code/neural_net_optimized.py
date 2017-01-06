@@ -23,7 +23,7 @@ def neural_net_predict(params, inputs):
     for W, b in params:
         outputs = np.dot(inputs, W) + b
         inputs = np.tanh(outputs)
-    return np.tanh(outputs)
+    return outputs
 
 def l2_norm(params):
     """Computes l2 norm of params by flattening them into a vector."""
@@ -32,31 +32,29 @@ def l2_norm(params):
 
 def log_posterior(params, inputs, targets, L2_reg):
     log_prior = -L2_reg * l2_norm(params)
-    log_lik = np.sum(neural_net_predict(params, inputs) * targets)
+    log_lik = -np.sum((neural_net_predict(params, inputs) - targets)**2)
     return log_prior + log_lik
 
-def accuracy(params, inputs, targets):
-    target_mean = np.mean(targets)
-    print(neural_net_predict(params, inputs))
-    multi = neural_net_predict(params, inputs)*targets
-    multi_mean = np.mean(multi)
-    return (np.absolute((multi_mean - target_mean)))
+def build_toy_dataset(n_data=20, noise_std=0.1):
+    D = 1
+    rs = npr.RandomState(0)
+    inputs  = np.concatenate([np.linspace(0, 2, num=n_data/2),
+                              np.linspace(6, 8, num=n_data/2)])
+    targets = np.cos(inputs) + rs.randn(n_data) * noise_std
+    inputs = (inputs - 4.0) / 4.0
+    inputs  = inputs.reshape((len(inputs), D))
+    targets = targets.reshape((len(targets), D))
+    return inputs, targets
 
 if __name__ == '__main__':
-    # Model parameters
-    layer_sizes = [3,4,4,1]
-    L2_reg = 0.09
+     # Model parameters
+    layer_sizes = [1,10,10,1]
+    L2_reg = 0.01
 
     # Training parameters
-    param_scale = 0.1
-    step_size = 0.001
-
-    #Define the input arrays x and the desired output array y
-    inputs = np.array([[1,1,-1]
-        ,[1,-1,-1]
-        ,[1,1,1]
-        ,[-1,1,1]])
-    targets = np.array([[-1,-1,1,1]]).T
+    param_scale = 1.0
+    step_size = 0.1
+    inputs, targets = build_toy_dataset()
 
     # Randomly initialize the neural net parameters
     init_params = init_random_params(param_scale, layer_sizes)
@@ -68,13 +66,27 @@ if __name__ == '__main__':
     # Use autograd to obtain the gradient of the objective function
     objective_grad = grad(objective)
 
-    print("Accuracy:")
+    # Set up figure.
+    fig = plt.figure(figsize=(12, 8), facecolor='white')
+    ax = fig.add_subplot(211, frameon=False)
+    #ax2 = fig.add_subplot(111, frameon=False)
+    plt.ion()
+    plt.show(block=False)
+
     def print_function(params, iter, gradient):
-            # Print the accuracy once every 100 steps
-            if (iter%100 == 0):
-                print(accuracy(params,inputs,targets))
+            plot_inputs = np.linspace(-8, 8, num=400)
+            outputs = neural_net_predict(params, np.expand_dims(plot_inputs, 1))
+
+            # Plot data and functions.
+            plt.cla()
+            ax.plot(inputs, targets, 'bx')
+            ax.plot(plot_inputs, outputs)
+            #ax2.matshow(params)
+            print(params)
+            plt.draw()
+            plt.pause(1.0/60.0)
 
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.
     optimized_params = adam(objective_grad, init_params, step_size=step_size,
-                            num_iters=1000, callback=print_function)
+                            num_iters=100, callback=print_function)
 

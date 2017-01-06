@@ -1,6 +1,7 @@
 import autograd.numpy as np
 from autograd import elementwise_grad
 from autograd import grad
+import matplotlib
 import matplotlib.pyplot as plt
 
 #Define the objective function (sigmoid)
@@ -30,7 +31,7 @@ plt.ion()
 plt.show()
 count = 0
 
-for iter in xrange(60000):
+for iter in xrange(180):
 
 	#Forward Propagation
 	l0 = x
@@ -62,5 +63,10 @@ for iter in xrange(60000):
 	plt.ylabel('Error')
 	plt.xlabel('Output Vector Index')
 	plt.draw()
+
+	#save images
+	if iter%5 == 0:
+		plt.savefig('step{}.png'.format(iter))
+
 	plt.pause(1.0/100000000.0)
 
