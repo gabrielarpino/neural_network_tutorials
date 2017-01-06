@@ -2,7 +2,7 @@
 
 Coming soon.
 
-[Code](~/final_code/neural_net_optimized.py)
+[Code](../final_code/neural_net_optimized.py)
 
 <img src="neural_net_optimized.gif" width="400">
 
