@@ -66,11 +66,11 @@ if __name__ == '__main__':
     # Use autograd to obtain the gradient of the objective function
     objective_grad = grad(objective)
 
-    show_matrix = 0
+    show_matrix = 1
 
     # Set up figure.
-    fig1 = plt.figure(figsize=(12, 8), facecolor='white')
-    ax = fig1.add_subplot(111, frameon=False)
+    #fig1 = plt.figure(figsize=(12, 8), facecolor='white')
+    #ax = fig1.add_subplot(111, frameon=False)
     if show_matrix:
         fig2 = plt.figure(figsize=(12, 8), facecolor='white')
         ax2 = fig2.add_subplot(121, frameon=False)
@@ -84,18 +84,20 @@ if __name__ == '__main__':
 
             # Plot data and functions.
             plt.cla()
-            plt.cla()
-            ax.plot(inputs, targets, 'bx')
-            ax.plot(plot_inputs, outputs)
-            plt.xlabel("Possible Inputs")
-            plt.ylabel("Neural Network Outputs")
+            #plt.cla()
+            #ax.plot(inputs, targets, 'bx')
+            #ax.plot(plot_inputs, outputs)
+            #plt.xlabel("Possible Inputs")
+            #plt.ylabel("Neural Network Outputs")
             if show_matrix:
-                ax2.matshow(params[0][0].T, cmap=plt.cm.Blues)
-                ax3.matshow(np.array([params[0][1]]).T, cmap=plt.cm.Blues)
+                ax2.matshow(params[0][0].T, cmap=plt.cm.Reds)
+                ax2.set_title("Hidden Layer 1")
+                ax3.matshow(np.array([params[0][1]]).T, cmap=plt.cm.Reds)
+                ax3.set_title("Hidden Layer 2")
             plt.draw()
 
             #save images
-            if iter%5 == 0:
+            if iter%1 == 0:
                 plt.savefig('step{}.png'.format(iter))
 
             plt.pause(1.0/60.0)
