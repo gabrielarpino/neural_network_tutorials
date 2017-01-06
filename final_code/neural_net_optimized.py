@@ -66,10 +66,15 @@ if __name__ == '__main__':
     # Use autograd to obtain the gradient of the objective function
     objective_grad = grad(objective)
 
+    show_matrix = 0
+
     # Set up figure.
-    fig = plt.figure(figsize=(12, 8), facecolor='white')
-    ax = fig.add_subplot(211, frameon=False)
-    #ax2 = fig.add_subplot(111, frameon=False)
+    fig1 = plt.figure(figsize=(12, 8), facecolor='white')
+    ax = fig1.add_subplot(111, frameon=False)
+    if show_matrix:
+        fig2 = plt.figure(figsize=(12, 8), facecolor='white')
+        ax2 = fig2.add_subplot(121, frameon=False)
+        ax3 = fig2.add_subplot(122, frameon=False)
     plt.ion()
     plt.show(block=False)
 
@@ -79,11 +84,20 @@ if __name__ == '__main__':
 
             # Plot data and functions.
             plt.cla()
+            plt.cla()
             ax.plot(inputs, targets, 'bx')
             ax.plot(plot_inputs, outputs)
-            #ax2.matshow(params)
-            print(params)
+            plt.xlabel("Possible Inputs")
+            plt.ylabel("Neural Network Outputs")
+            if show_matrix:
+                ax2.matshow(params[0][0].T, cmap=plt.cm.Blues)
+                ax3.matshow(np.array([params[0][1]]).T, cmap=plt.cm.Blues)
             plt.draw()
+
+            #save images
+            if iter%5 == 0:
+                plt.savefig('step{}.png'.format(iter))
+
             plt.pause(1.0/60.0)
 
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.

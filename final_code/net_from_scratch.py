@@ -64,9 +64,5 @@ for iter in xrange(180):
 	plt.xlabel('Output Vector Index')
 	plt.draw()
 
-	#save images
-	if iter%5 == 0:
-		plt.savefig('step{}.png'.format(iter))
-
 	plt.pause(1.0/100000000.0)
 

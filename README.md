@@ -20,6 +20,10 @@ http://cs231n.github.io/neural-networks-1/
 It consists of an input layer, hidden layers, and an output layer. It's major use is to "train" inputs into outputs. More information on basic neural networks can be found here: http://cs231n.github.io/neural-networks-1/
 
 [Simple neural network example](tutorials/simple_neural_network_example.md)
+<img src="tutorials/neural_net_backprop.gif" width="400">
+
+[Coming Soon: Optimized Neural Network Example (Using Autograd)](tutorials/optimized_neural_network_example.md)
+<img src="tutorials/neural_net_optimized.gif" width="400">
 
 # Dependencies
 
