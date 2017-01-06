@@ -21,9 +21,6 @@ It consists of an input layer, hidden layers, and an output layer. It's major us
 
 [Simple neural network example](final_code/simple_neural_network_example.md)
 
-
-
-
 # Dependencies
 
 The implementations depend on autograd (https://github.com/HIPS/autograd), a numpy code differentiator, for the objective function derivatives and optimizers. 
