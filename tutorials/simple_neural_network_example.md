@@ -81,4 +81,4 @@ And we are done! After this code has ran, the synapses have been adjusted and th
 
 Error for this neural network was plotted for every input, showing that the error (the difference between the neural network's prediction and the target values) goes to zero for all four inputs. The plot is displayed with Error on the Y-axis and Output Vector Index on the X-axis:
 
-<img src="images/neural_net_backprop.gif" width="400">
+<img src="neural_net_backprop.gif" width="400">
