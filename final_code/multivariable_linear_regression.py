@@ -9,10 +9,10 @@ def predictions(weights, inputs):
 
 def cost_function(weights):
 	preds = predictions(weights, inputs)
-	print "predictions", preds
+	#print "predictions", preds
 	cost = (preds - targets)**2
-	print "cost", cost
-	return -np.sum(np.log(cost))
+	#print "cost", cost
+	return -(0.5*1/m)*np.sum((cost))
 
 
 # Build a toy dataset.
@@ -21,12 +21,12 @@ inputs = np.array([[0.52, 1.12,  0.77],
                    [0.52, 0.06, -1.30],
                    [0.74, -2.49, 1.39]])
 targets = np.array([0.45, 0.33, -0.89, -0.11])
+m = len(targets)
 
 training_gradient_fun = grad(cost_function)
 
 # Optimize weights using gradient descent.
-weights = np.array([0.0, 0.0, 0.0])
-b = np.array([0.0, 0.0, 0.0]).T
+weights = np.array([0.5, 0.5, 0.5])
 print "Initial loss:", cost_function(weights)
 
 # Set up figure.
@@ -36,11 +36,11 @@ plt.ion()
 plt.show(block=False)
 
 for i in xrange(2000):
-    weights += training_gradient_fun(weights) * 0.1
-    print "training_gradient_fun(weights)", training_gradient_fun(weights)
+    weights += training_gradient_fun(weights) * 0.5
     print "loss:", cost_function(weights)
 
     plot_inputs = np.linspace(1, 4, num=4)
+    x = np.linspace(-1,1,num=100)
 
     # Plot functions
     plt.cla()

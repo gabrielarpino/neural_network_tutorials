@@ -1,6 +1,6 @@
-#Simple Neural Network Example
+#Simple Neural Network For Binary Classification Example
 
-Let's implement a simple neural network from scratch with 4 layers total: one for the input, two that are hidden, and one for the output. The inputs to our neural network will be the following:
+Let's implement a simple neural network for Binary Classification from scratch with 4 layers total: one for the input, two that are hidden, and one for the output. The inputs to our neural network will be the following:
 
 	Inputs 						|Outputs
 	[1,1,0]						 0
