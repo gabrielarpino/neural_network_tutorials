@@ -41,11 +41,11 @@ def build_toy_dataset(n_data=20, noise_std=0.1):
     inputs  = inputs.reshape((len(inputs), D))
     targets = targets.reshape((len(targets), D))
     return inputs, targets
-
 ```
 
 It just creates two numpy arrays as sample inputs and targets following a function that takes as inputs numbers within (-1,-0.5),(0.5,1), and returns its cosine with some added noise. The inputs and targets would look as such:
 
+```
 	Inputs 
 
 	array([[-1.        ],				
@@ -70,7 +70,7 @@ It just creates two numpy arrays as sample inputs and targets following a functi
        [ 1.        ]])
 
 
-   -
+   --
 
    	Targets
 
@@ -94,10 +94,11 @@ It just creates two numpy arrays as sample inputs and targets following a functi
        [  2.73500390e-01],
        [  1.07436895e-01],
        [ -2.30909608e-01]])
-
+```
 
 Next, the parameters are initialized through the init_random_params(param_scale, layer_sizes) function, which in short returns randomized initial parameters according to the chosen parameter scale and layer sizes, as such:
 
+```python
 >>> init_params
 [(array([[ 1.76405235,  0.40015721,  0.97873798,  2.2408932 ,  1.86755799,
         -0.97727788,  0.95008842, -0.15135721, -0.10321885,  0.4105985 ]]), array([ 0.14404357,  1.45427351,  0.76103773,  0.12167502,  0.44386323,
@@ -131,6 +132,7 @@ Next, the parameters are initialized through the init_random_params(param_scale,
        [-0.20829876],
        [ 0.39600671],
        [-1.09306151]]), array([-1.49125759]))]
+```
 
 Confusing at first, but it is simply a list containing numpy arrays for the weights in each layer. Each layer contains two numpy arrays, one for the regular network neurons and another for the bias neuron.
 
@@ -143,7 +145,6 @@ This section involves multiple function definitions. Hang tight because they all
     # Define training objective
     def objective(params, iter):
         return -log_posterior(params, inputs, targets, L2_reg)
-
 ```
 
 We begin by specifying our objective function, or function to be optimized. As we know from bayesian probability, the function we are aiming to optimize is the following:
@@ -170,7 +171,6 @@ def log_posterior(params, inputs, targets, L2_reg):
     log_prior = -L2_reg * l2_norm(params)
     log_lik = -np.sum((neural_net_predict(params, inputs) - targets)**2)
     return log_prior + log_lik
-
 ```
 
 The log_prior variable refers to the log(P(weights)) factor. This is estimated by taking the l2_norm of the parameters. The l2_norm is the famous euclidian magnitude, calculated as follows:
