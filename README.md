@@ -2,11 +2,6 @@
 
 Machine Learning, being the fascinating field it is, might at times seem un-intuitive and at times even convoluted in its implementation. The aim of this repository is to provide concise neural network implementations and tutorials along with them, in order to facilitate their introduction.
 
-This repository is currently under construction, and the available code in the final_code folder contains the following implementations:
-
-  - net_from_scratch.py : This is a three layer iterative implementation of a binary classifier neural network. Readme and tutorial in progress.
-  - neural_net_optimized.py : This is a three layer implementation of a binary classifier neural network utilizing external optimizers other than simple iterative backpropagation. Readme and tutorial in progress.
-
 # What is a neural network?
 
 A neural network is a computer learning system modelled after the human brain's method of learning. While we will not go into details of its biological coherence, it is heavily inspired on the brain's transfer of signals between neurons in the process of human learning.
