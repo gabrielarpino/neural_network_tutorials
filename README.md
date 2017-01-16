@@ -23,6 +23,10 @@ It consists of an input layer, hidden layers, and an output layer. It's major us
 
 <img src="tutorials/neural_net_optimized.gif" width="400">
 
+[Regularization Example](tutorials/regularization_example.md)
+
+<img src="regularization01.gif" width="800">
+
 # Dependencies
 
 The implementations depend on autograd (https://github.com/HIPS/autograd), a numpy code differentiator, for the objective function derivatives and optimizers. 
