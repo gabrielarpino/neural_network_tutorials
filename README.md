@@ -25,7 +25,7 @@ It consists of an input layer, hidden layers, and an output layer. It's major us
 
 [Regularization Example](tutorials/regularization_example.md)
 
-<img src="tutorials/regularization01.gif" width="800">
+<img src="tutorials/regularization01.gif" width="400">
 
 # Dependencies
 
