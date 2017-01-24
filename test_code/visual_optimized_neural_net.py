@@ -2,7 +2,6 @@ from __future__ import absolute_import, division
 from __future__ import print_function
 import autograd.numpy as np
 import autograd.numpy.random as npr
-from autograd.scipy.misc import logsumexp
 from autograd import grad
 from autograd.util import flatten
 from optimizers import adam
@@ -16,49 +15,27 @@ def init_random_params(scale, layer_sizes, rs=npr.RandomState(0)):
             for m, n in zip(layer_sizes[:-1], layer_sizes[1:])]
 
 def neural_net_predict(params, inputs):
+    """Implements a deep neural network for classification. params is a list of (weights, bias) tuples.
+       inputs is an (N x D) matrix. returns normalized class log-probabilities."""
     for W, b in params:
         outputs = np.dot(inputs, W) + b
         inputs = np.tanh(outputs)
     return outputs
 
-def l2_norm(params):
-    """Computes l2 norm of params by flattening them into a vector."""
-    flattened, _ = flatten(params)
-    return np.dot(flattened, flattened)
-
-def log_posterior(params, inputs, targets, L2_reg):
-    log_prior = -L2_reg * l2_norm(params)
-    log_lik = -np.sum((neural_net_predict(params, inputs) - targets)**2)
-    return log_prior + log_lik
-
-def build_toy_dataset(n_data=10, noise_std=0.1):
-    D = 1
-    rs = npr.RandomState(0)
-    inputs  = np.concatenate([np.linspace(0, 2, num=n_data/2),
-                              np.linspace(6, 8, num=n_data/2)])
-    targets = np.cos(inputs) + rs.randn(n_data) * noise_std
-    inputs = (inputs - 4.0) / 4.0
-    inputs  = inputs.reshape((len(inputs), D))
-    targets = targets.reshape((len(targets), D))
-    return inputs, targets
-
 if __name__ == '__main__':
     
-    # Model parameters
+    # Model and training parameters
     layer_sizes = [1,10,10,1]
-    L2_reg = 0.01
-
-    # Training parameters
-    param_scale = 1.0
-    step_size = 0.1
-    inputs, targets = build_toy_dataset()
+    param_scale, step_size = 1.0, 0.1
+    inputs = np.array([[-1.0],[-0.875],[-0.75],[-0.625],[-0.5],[0.5],[0.625],[0.75],[0.875],[1.0]])
+    targets = np.array([[ 1.17],[ 0.92],[ 0.64],[ 0.30],[-0.23],[0.86],[1.07],[0.74],[0.34],[-0.10]])
 
     # Randomly initialize the neural net parameters
     init_params = init_random_params(param_scale, layer_sizes)
 
-    # Define training objective
+    # Define training objective, equivalent to the log_posterior of the distribution
     def objective(params, iter):
-        return -log_posterior(params, inputs, targets, L2_reg)
+        return np.sum((neural_net_predict(params, inputs) - targets)**2)
 
     # Use autograd to obtain the gradient of the objective function
     objective_grad = grad(objective)
@@ -70,16 +47,17 @@ if __name__ == '__main__':
     plt.show(block=False)
 
     def print_function(params, iter, gradient):
+            """ Plot data and functions. """
             plot_inputs = np.linspace(-8, 8, num=400)
             outputs = neural_net_predict(params, np.expand_dims(plot_inputs, 1))
-
-            # Plot data and functions.
             plt.cla()
             ax.plot(inputs, targets, 'bx')
             ax.plot(plot_inputs, outputs)
             plt.xlabel("Possible Inputs")
             plt.ylabel("Neural Network Outputs")
+            ax.set_ylim([-2,2])
             plt.draw()
+            plt.savefig(str(iter) + '.jpg')
             plt.pause(1.0/60.0)
 
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.

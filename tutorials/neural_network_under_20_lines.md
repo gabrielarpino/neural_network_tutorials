@@ -1,63 +1,59 @@
-# Neural Network in less than 25 lines of code
+# [Neural Network in less than 20 lines of python](../final_code/concise_optimized_neural_net.py)
 
-We will generalize our notion of a neural network. In our previous tutorial, "Simple Neural Network For Binary Classification Example", we looked at a simple method of developing a neural network for binary classification and training it using backpropagation.
+Here, we will analyze a neural network with the following properties:
 
-Here, we will make two changes:
-
-	*	Generalize the neural network to not just a binary classifier, but a system capable of learning any nonlinear function
+	*	The neural network will be generalized, not only a binary classifier but a system capable of learning any nonlinear function
 	
-	*	Formulate the network as an optimization problem, and solve it using an optimizer
+	*	The network is framed as an optimization problem, allowing for efficient training.
 
 Lets step through the code.
 
-### Step 1: Define parameters, inputs, and targets
+### Step 1: Define our network prediction function.
+
+This is where we forward propagate our inputs through the multilayer perceptron. As seen below, this is done through one simple three line for loop!
+
+```python 
+
+def neural_net_predict(params, inputs):
+    for W, b in params:
+        outputs = np.dot(inputs, W) + b
+        inputs = np.tanh(outputs)
+    return outputs
+```
+
+The loop multiplies the incoming perceptron values by the appropriate weights, adds the bias term b, and passes that through a sigmoid function tanh(x). It then defines inputs as the next layer of perceptrons, and repeats the steps for all layers.
+
+Of course, the params and inputs matrices have to be formatted correctly for this concise forward propagation to work. Let's do that:
+
+### Step 2: Define parameters, inputs, and targets
 
 ```python
 
-    # Model parameters
+    # Model and training parameters
     layer_sizes = [1,10,10,1]
-    L2_reg = 0.01
-
-    # Training parameters
-    param_scale = 1.0
-    step_size = 0.1
-    inputs, targets = build_toy_dataset()
+    param_scale, step_size = 1.0, 0.1
+    inputs = np.array([[-1.0],[-0.875],[-0.75],[-0.625],[-0.5],[0.5],[0.625],[0.75],[0.875],[1.0]])
+    targets = np.array([[ 1.17],[ 0.92],[ 0.64],[ 0.30],[-0.23],[0.86],[1.07],[0.74],[0.34],[-0.10]])
 
     # Randomly initialize the neural net parameters
     init_params = init_random_params(param_scale, layer_sizes)
 ```
 
-Our inputs and targets are specified by the build_toy_dataset() function shown below:
-
-```python
-
-def build_toy_dataset(n_data=20, noise_std=0.1):
-    D = 1
-    rs = npr.RandomState(0)
-    inputs  = np.concatenate([np.linspace(0, 2, num=n_data/2),
-                              np.linspace(6, 8, num=n_data/2)])
-    targets = np.cos(inputs) + rs.randn(n_data) * noise_std
-    inputs = (inputs - 4.0) / 4.0
-    inputs  = inputs.reshape((len(inputs), D))
-    targets = targets.reshape((len(targets), D))
-    return inputs, targets
-```
-
-It just creates two numpy arrays as sample inputs and targets following a function that takes as inputs numbers within (-1,-0.5),(0.5,1), and returns its cosine with some added noise. The inputs and targets would look as [such](../tutorials/sample_inputs_and_targets.md).
+These inputs and targets are random points from the range -1 to 1 of the cos(x) function.
 
 Next, the parameters are initialized through the init_random_params(param_scale, layer_sizes) function, which in short returns randomized initial parameters according to the chosen parameter scale and layer sizes, as [such](../tutorials/sample_init_params.md).
 
 Confusing at first, but it is simply a list containing numpy arrays for the weights in each layer. Each layer contains two numpy arrays, one for the regular network neurons and another for the bias neuron.
 
-### Step 2: Frame the network as an optimization problem
+### Step 3: Frame the network as an optimization problem
 
 This section involves multiple function definitions. Hang tight because they all come together in the end.
 
 ```python
 
-    # Define training objective
+    # Define training objective, equivalent to the log_posterior of the distribution
     def objective(params, iter):
-        return -log_posterior(params, inputs, targets, L2_reg)
+        return np.sum((neural_net_predict(params, inputs) - targets)**2)
 ```
 
 We begin by specifying our objective function, or function to be optimized. As we know from bayesian probability, the function we are aiming to optimize is the following:
@@ -78,40 +74,9 @@ The next issue we are faced with is convexity, or whether the optimization probl
 
 And this is exactly what the log_posterior function is referring to!
 
-NOTE: We must negate the log posterior because we want to minimize the negative log of the probability, which is the same as maximizing the positive log of the probability. 
+The log(P(weights)) is used for a concept called regularization, explored [here](../tutorials/regularization_example.md). We omit it from this network for simplicity.
 
-``` python
-
-def log_posterior(params, inputs, targets, L2_reg):
-    log_prior = -L2_reg * l2_norm(params)
-    log_lik = -np.sum((neural_net_predict(params, inputs) - targets)**2)
-    return log_prior + log_lik
-```
-
-The log_prior variable refers to the log(P(weights)) factor. This is estimated by taking the l2_norm of the parameters. The l2_norm is the famous euclidian magnitude, calculated as follows:
-
-```python
-
-def l2_norm(params):
-    """Computes l2 norm of params by flattening them into a vector."""
-    flattened, _ = flatten(params)
-    return np.dot(flattened, flattened)
-```
-
-More on regularization in future tutorials.
-
-The log_lik variable refers to the log(P(our outputs are correct | weights)) factor. This factor is determined by running a forward propagation on our network, subtracting the outputs from the targets, and squaring them. This gives us the squared magnitude of our error. The neural_net_predict function forward propagates as follows (surprisingly easy):
-
-```python 
-
-def neural_net_predict(params, inputs):
-    for W, b in params:
-        outputs = np.dot(inputs, W) + b
-        inputs = np.tanh(outputs)
-    return outputs
-```
-
-### Step 3: Find the derivative of the objective function
+### Step 4: Find the derivative of the objective function
 
 This is arguably the most important step to optimization: knowing which direction and magnitude with which to alter our weights. Thankfully, we depend on a package called autograd that amazingly takes derivatives of python code. It is able to work through loops, if statements, and function definitions involving numpy or scipy code. This next one line command is all we need to find the derivative of our objective function:
 
@@ -121,15 +86,19 @@ This is arguably the most important step to optimization: knowing which directio
     objective_grad = grad(objective)
 ```
 
-### Step 4: Optimize
+### Step 5: Optimize
 
 We use an optimizing function called adam, and we minimize the objective function. Adam applies gradient descent with momentum. Short code for the optimization function can be viewed [here](../final_code/optimizers.py).
 
 And that is all. We now have a neural network able to learn nonlinear functions, with no need for back propagation. The advantage to the use of autograd and the adam optimizer is that they keep the code concise and easily understandeable by framing the problem as an optimization problem.
 
-Below are the results of running the complete [Code](../final_code/neural_net_optimized.py), the image below represents a graph of the neural network's performance in learning the approximate cosine function, where the target points are the X scatters on the plot:
+The concise code can be found [here](../final_code/concise_optimized_neural_net.py), which outputs the total error of the network in fitting the function.
+
+Below are the results of running the [visual and fully commented version of the code](../final_code/neural_net_optimized.py), the image below represents a graph of the neural network's performance in learning the approximate cosine function, where the target points are the X scatters on the plot:
 
 <img src="neural_net_optimized.gif" width="400">
+
+A similar writeup for the visual and fully commented version of the code can be found [here](../tutorials/optimized_neural_network_example.md).
 
 We can also view some of the network's weights in the 1st and 2nd hidden layer, to get a sense of the change that occurs within the network. Darker red means that that node has a larger outgoing weight:
 
