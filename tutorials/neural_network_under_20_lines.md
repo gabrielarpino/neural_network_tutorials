@@ -1,4 +1,6 @@
-# [Neural Network in less than 20 lines of python](../final_code/concise_optimized_neural_net.py)
+# Neural Network in less than 20 lines of python
+
+[Full code here](../final_code/concise_optimized_neural_net.py).
 
 Here, we will analyze a neural network with the following properties:
 
@@ -92,7 +94,7 @@ We use an optimizing function called adam, and we minimize the objective functio
 
 And that is all. We now have a neural network able to learn nonlinear functions, with no need for back propagation. The advantage to the use of autograd and the adam optimizer is that they keep the code concise and easily understandeable by framing the problem as an optimization problem.
 
-The concise code can be found [here](../final_code/concise_optimized_neural_net.py), which outputs the total error of the network in fitting the function.
+The [concise code can be found here](../final_code/concise_optimized_neural_net.py), which outputs the total error of the network in fitting the function.
 
 Below are the results of running the [visual and fully commented version of the code](../final_code/neural_net_optimized.py), the image below represents a graph of the neural network's performance in learning the approximate cosine function, where the target points are the X scatters on the plot:
 

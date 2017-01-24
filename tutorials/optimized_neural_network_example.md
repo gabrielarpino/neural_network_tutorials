@@ -1,4 +1,4 @@
-# Neural Network in less than 25 lines of code
+# Optimized, Generalized, and Commented Neural Network
 
 We will generalize our notion of a neural network. In our previous tutorial, "Simple Neural Network For Binary Classification Example", we looked at a simple method of developing a neural network for binary classification and training it using backpropagation.
 
