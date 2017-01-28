@@ -14,7 +14,7 @@ http://cs231n.github.io/neural-networks-1/
 
 It consists of an input layer, hidden layers, and an output layer. It's major use is to "train" inputs into outputs. More information on basic neural networks can be found here: http://cs231n.github.io/neural-networks-1/
 
-[Neural Network in under 20 lines of python](/tutorials/neural_network_under_20_lines.md)
+[Neural Network in 20 lines of python](/tutorials/neural_network_under_20_lines.md)
 
 <img src="tutorials/neural_net_optimized.gif" width="400">
 
