@@ -7,14 +7,14 @@ Machine Learning, being the fascinating field it is, might at times seem un-intu
 A neural network is a computer learning system modelled after the human brain's method of learning. While we will not go into details of its biological coherence, it is heavily inspired on the brain's transfer of signals between neurons in the process of human learning.
 
 Roughly, a neural network look as so:
-
+P
 <img src="tutorials/neural_net.jpeg" width="400">
 
 http://cs231n.github.io/neural-networks-1/
 
 It consists of an input layer, hidden layers, and an output layer. It's major use is to "train" inputs into outputs. More information on basic neural networks can be found here: http://cs231n.github.io/neural-networks-1/
 
-[Neural Network in less than 20 lines of python](/tutorials/neural_network_under_20_lines.md)
+[Neural Network in under 20 lines of python](/tutorials/neural_network_under_20_lines.md)
 
 <img src="tutorials/neural_net_optimized.gif" width="400">
 

@@ -1,4 +1,4 @@
-# Neural Network in less than 20 lines of python
+# Neural Network in under 20 lines of python
 
 [Full code here](../final_code/concise_optimized_neural_net.py).
 
