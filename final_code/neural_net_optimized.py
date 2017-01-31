@@ -46,7 +46,7 @@ if __name__ == '__main__':
     
     # Model parameters
     layer_sizes = [1,10,10,1]
-    L2_reg = 0.01
+    L2_reg = 0.00
 
     # Training parameters
     param_scale = 1.0

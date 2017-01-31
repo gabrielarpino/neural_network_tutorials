@@ -27,13 +27,13 @@ if __name__ == '__main__':
     # Model and training parameters
     layer_sizes = [1,10,10,1]
     param_scale, step_size = 1.0, 0.1
-    inputs = np.array([[-1.0],[-0.875],[-0.75],[-0.625],[-0.5],[0.5],[0.625],[0.75],[0.875],[1.0]])
-    targets = np.array([[ 1.17],[ 0.92],[ 0.64],[ 0.30],[-0.23],[0.86],[1.07],[0.74],[0.34],[-0.10]])
 
     # Randomly initialize the neural net parameters
     init_params = init_random_params(param_scale, layer_sizes)
 
-    # Define training objective, equivalent to the log_posterior of the distribution
+    # Define inputs, targets, and objective function (equivalent to the log_posterior of the distribution)
+    inputs = np.array([[-1.0],[-0.875],[-0.75],[-0.625],[-0.5],[0.5],[0.625],[0.75],[0.875],[1.0]])
+    targets = np.array([[ 1.17],[ 0.92],[ 0.64],[ 0.30],[-0.23],[0.86],[1.07],[0.74],[0.34],[-0.10]])
     def objective(params, iter):
         return np.sum((neural_net_predict(params, inputs) - targets)**2)
 

@@ -102,6 +102,13 @@ Below are the results of running the [visual and fully commented version of the 
 
 A similar writeup for the visual and fully commented version of the code can be found [here](../tutorials/optimized_neural_network_example.md).
 
-We can also view some of the network's weights in the 1st and 2nd hidden layer, to get a sense of the change that occurs within the network. Darker red means that that node has a larger outgoing weight:
+We can also view some of the network's weights in the 1st and 2nd hidden layer, to get a sense of the change that occurs within the network. The following image displays the changing weights as the neural net is optimized. 
 
-<img src="network_weights.gif" width="400">
+<img src="full_weights_larger.gif" width="400">
+
+The top row represents the bias weights of the neural net, 10 bias weights going into the 1st hidden layer, 10 bias weights going into the 2nd hidden layer, and 1 bias weight going into the output layer.
+
+The bottom row represents the weights of the incoming weights into hidden layer 1, the incoming weights into hidden layer 2 (notice this is a matrix because each hidden layer 1 node as 10 outgoing weights), and the incoming weights into the output layer. 
+
+Pink means that that the corresponding weight has a high value, and blue means it has a low value. It is interesting to notice how the network changes a lot initially, and the changes become very minor as the objective reaches it's minimum value. 
+
