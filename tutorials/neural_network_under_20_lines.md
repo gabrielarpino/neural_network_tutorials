@@ -104,7 +104,7 @@ A similar writeup for the visual and fully commented version of the code can be 
 
 We can also view some of the network's weights in the 1st and 2nd hidden layer, to get a sense of the change that occurs within the network. The following image displays the changing weights as the neural net is optimized. 
 
-<img src="full_weights_larger.gif" width="400">
+<img src="full_weights_larger.gif" width="1000">
 
 The top row represents the bias weights of the neural net, 10 bias weights going into the 1st hidden layer, 10 bias weights going into the 2nd hidden layer, and 1 bias weight going into the output layer.
 
