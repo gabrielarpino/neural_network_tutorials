@@ -7,7 +7,7 @@ Machine Learning, being the fascinating field it is, might at times seem un-intu
 A neural network is a computer learning system modelled after the human brain's method of learning. While we will not go into details of its biological coherence, it is heavily inspired on the brain's transfer of signals between neurons in the process of human learning.
 
 Roughly, a neural network look as so:
-P
+
 <img src="tutorials/neural_net.jpeg" width="400">
 
 http://cs231n.github.io/neural-networks-1/
