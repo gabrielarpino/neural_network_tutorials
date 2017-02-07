@@ -56,7 +56,7 @@ if __name__ == '__main__':
     
     # Model parameters
     layer_sizes = [1,10,10,1]
-    L2_reg = 0.1
+    L2_reg = 0.3
 
     # Training parameters
     param_scale = 1.0
@@ -76,7 +76,6 @@ if __name__ == '__main__':
 
     # Set up figures.
     fig1 = plt.figure(figsize=(12, 8), facecolor='white')
-    #fig2 = plt.figure(figsize=(12, 8), facecolor='white')
     ax2 = fig1.add_subplot(212, frameon=False)
     ax = fig1.add_subplot(211, frameon=False)
     plt.ion()
@@ -112,10 +111,12 @@ if __name__ == '__main__':
             ax2.plot(iterlist, traincostlist, 'g-', label='Train Cost')
             ax2.set_xlabel('Number of Iterations')
             ax2.set_ylabel('Error in Estimation or Cost')
+            ax2.set_xlim([0, 50])
             if iter == 0:
                 ax2.legend()
             
             plt.draw()
+            plt.savefig(str(iter) + '.jpg')
             plt.pause(1.0/60.0)
 
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.

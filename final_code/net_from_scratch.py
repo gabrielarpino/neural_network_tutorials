@@ -27,6 +27,8 @@ syn2 = 2*np.random.random((4,1)) - 1
 # Set up figure.
 fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, frameon=False)
+ax.set_ylim([-0.5, 0.5])
+ax.set_xlim([0, 4])
 plt.ion()
 plt.show()
 count = 0
@@ -59,6 +61,7 @@ for iter in xrange(180):
 
 	#Plot the error as it changes during the back-propagation steps
 	count = count + 1
+	plt.cla()
 	ax.plot(delta_output)
 	plt.ylabel('Error')
 	plt.xlabel('Output Vector Index')
