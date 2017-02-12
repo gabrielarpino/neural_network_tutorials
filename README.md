@@ -26,6 +26,8 @@ It consists of an input layer, hidden layers, and an output layer. It's major us
 
 <img src="tutorials/neural_net_backprop.gif" width="400">
 
+[Neural Network with Dropout in 21 lines of python (Coming Soon)]()
+
 # Dependencies
 
 The implementations depend on autograd (https://github.com/HIPS/autograd), a numpy code differentiator, for the objective function derivatives and optimizers. 
