@@ -6,7 +6,7 @@ In this example, we analyze the dropout technique, where random nodes from our n
 
 The technique is used to increase test set accuracy on neural networks and reduce overfitting. The intuition behind the technique is the following: if nodes are always used together, they could become dependent on each other in ways specific to the training case. If random nodes are deleted during training, then every node will be trained to produce useful values regardless of its surrounding nodes. This will ensure that, when test sets are used that stimulate different combinations of nodes, these nodes will be prepared to deal with this "foreign" environment. 
 
-This is done by adding the following line to the previous [concise neural network code](/tutorials/neural_network_under_20_lines.md):
+This is done by adding the following line inside the for loop in the neural_net_predict function from our previous [concise neural network code](/tutorials/neural_network_under_20_lines.md):
 
 ```python
     if dropout_train: inputs *= np.random.binomial([np.ones_like(inputs)],(1-dropout_rate))[0]/(1-dropout_rate)
