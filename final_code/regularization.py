@@ -116,7 +116,7 @@ if __name__ == '__main__':
                 ax2.legend()
             
             plt.draw()
-            plt.savefig(str(iter) + '.jpg')
+            #plt.savefig(str(iter) + '.jpg')
             plt.pause(1.0/60.0)
 
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.

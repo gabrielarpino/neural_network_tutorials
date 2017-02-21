@@ -18,7 +18,11 @@ It consists of an input layer, hidden layers, and an output layer. It's major us
 
 <img src="tutorials/full_weights_larger.gif" width="1000">
 
-[Regularization Example](tutorials/regularization_example.md)
+[Neural Network with Dropout in 21 lines of python](/tutorials/dropout_example.md)
+
+<img src="tutorials/dropoutrate01.gif" width="1000">
+
+[L2 Regularization Example](tutorials/regularization_example.md)
 
 <img src="tutorials/regularization01.gif" width="400">
 
@@ -26,7 +30,7 @@ It consists of an input layer, hidden layers, and an output layer. It's major us
 
 <img src="tutorials/neural_net_backprop.gif" width="400">
 
-[Neural Network with Dropout in 21 lines of python (Coming Soon)]()
+
 
 # Dependencies
 

@@ -42,8 +42,7 @@ if __name__ == '__main__':
 
     def print_function(params, iter, gradient):
     	""" Print the error at every iteration """
-    	if iter % 10 == 0:
-    		print("Total Error:", np.sum(np.absolute(neural_net_predict(params, inputs) - targets)))
+    	if iter % 10 == 0: print("Total Error:", np.sum(np.absolute(neural_net_predict(params, inputs) - targets)))
 
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.
     optimized_params = adam(objective_grad, init_params, step_size=step_size,
