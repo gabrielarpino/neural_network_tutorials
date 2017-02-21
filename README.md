@@ -16,11 +16,11 @@ It consists of an input layer, hidden layers, and an output layer. It's major us
 
 [Neural Network in 20 lines of python](/tutorials/neural_network_under_20_lines.md)
 
-<img src="tutorials/full_weights_larger.gif" width="1000">
+<img src="tutorials/full_weights_larger.gif" width="700">
 
 [Neural Network with Dropout in 21 lines of python](/tutorials/dropout_example.md)
 
-<img src="tutorials/dropoutrate01.gif" width="1000">
+<img src="tutorials/dropoutrate01.gif" width="700">
 
 [L2 Regularization Example](tutorials/regularization_example.md)
 
