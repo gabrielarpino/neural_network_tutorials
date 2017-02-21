@@ -20,10 +20,7 @@ def neural_net_predict(params, inputs, dropout, test_time = False):
         outputs = np.dot(inputs, W) + b
         inputs = np.tanh(outputs)
         if dropout: 
-            if not test_time:
-                inputs *= np.random.binomial([np.ones_like(inputs)],(1-dropout_rate))[0]
-            else:
-                inputs *= (1-dropout_rate)      # rescale
+            inputs *= np.random.binomial([np.ones_like(inputs)],(1-dropout_rate))[0]/(1-dropout_rate)
     return outputs
 
 def l2_norm(params):

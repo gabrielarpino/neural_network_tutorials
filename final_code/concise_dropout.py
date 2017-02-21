@@ -20,8 +20,7 @@ def neural_net_predict(params, inputs, dropout_train = True):
     for W, b in params:
         outputs = np.dot(inputs, W) + b
         inputs = np.tanh(outputs)
-        if dropout_train: inputs *= np.random.binomial([np.ones_like(inputs)],(1-dropout_rate))[0]
-        else: inputs *= (1-dropout_rate)
+        if dropout_train: inputs *= np.random.binomial([np.ones_like(inputs)],(1-dropout_rate))[0]/(1-dropout_rate)
     return outputs
 
 if __name__ == '__main__':
