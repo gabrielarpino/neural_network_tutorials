@@ -2,9 +2,9 @@
 
 [Full code here](../final_code/concise_dropout.py).
 
-In this example, we analyze the dropout technique, where random nodes from our neural network are switched off during training to maximize test performance. More theory behind it can be found here: <https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf>. 
+In this example, we analyze the dropout technique, where random nodes from our neural network are switched off during training to maximize test performance. More theory behind it can be found here: <https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf>.
 
-The technique is used to increase test set accuracy on neural networks and reduce overfitting. The intuition behind the technique is the following: if nodes are always used together, they could become dependent on each other in ways specific to the training case. If random nodes are deleted during training, then every node will be trained to produce useful values regardless of its surrounding nodes. This will ensure that, when test sets are used that stimulate different combinations of nodes, these nodes will be prepared to deal with this "foreign" environment. 
+The technique is used to increase test set accuracy on neural networks and reduce overfitting. The intuition behind the technique is the following: if nodes are always used together, they could become dependent on each other in ways specific to the training case. If random nodes are deleted during training, then every node will be trained to produce useful values regardless of its surrounding nodes. This will ensure that, when test sets are used that stimulate different combinations of nodes, these nodes will be prepared to deal with this "foreign" environment.
 
 This is done by adding the following line inside the for loop in the neural_net_predict function from our previous [concise neural network code](/tutorials/neural_network_under_20_lines.md):
 
@@ -17,7 +17,7 @@ The line sets randomly selected nodes based off of the binomial distribution to 
 
 And that is it, below is a visualization of the dropout network with a dropout_rate of 0.1:
 
-<img src="dropoutrate01.gif" width="800"> 
+<img src="dropoutrate01.gif" width="800">
 
 Dropout rates can be determined experimentally or through hyperparameter optimization, and they depend on the size of your network.
 
@@ -27,23 +27,10 @@ Now, let us analyze how effective dropout is at reducing overfitting:
 
 In the above image, the dropout test cost becomes visibly lower than a standard test cost as the training iteration increases. This demonstrates dropout's ability to generalize the neural network to all possible test inputs.
 
+The dropout technique seems to tap into a family of functions, all of which fit the data to a similar degree. If we alter the random seed used by python, a different dropout model is produced. Below is an image of 10 dropout models trained in the same way mentioned, but using different random seeds.
+
+<img src="dropout_random_seeds_labelled.png" width="800">
+
+It is seen that each dropout model varies slightly from the rest, implying that what is really happenning during training is we are sampling from a distribution of dropout involved functions.
+
 A visual display version of the code is available [here](../final_code/dropout_visualized.py) which demonstrates dropout's test performance. It is important to note that the concise_dropout.py code does not demonstrate test performance, but simply outputs the training error.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

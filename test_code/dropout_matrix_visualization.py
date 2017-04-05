@@ -24,7 +24,7 @@ def neural_net_predict(params, inputs, dropout = True):
     return outputs
 
 if __name__ == '__main__':
-    
+
     # Model and training parameters
     layer_sizes = [1,10,10,1]
     param_scale, step_size = 1.0, 0.1
@@ -88,4 +88,3 @@ if __name__ == '__main__':
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.
     optimized_params = adam(objective_grad, init_params, step_size=step_size,
                             num_iters=100, callback=print_function)
-

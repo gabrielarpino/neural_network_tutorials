@@ -61,6 +61,10 @@ def build_test_dataset(n_data=20, noise_std=0.1):
     return inputs, targets
 
 if __name__ == '__main__':
+
+    # Create list of random seed inputs:
+    seed_inputs = [10,20,30,40,50,60,70,80,90,100]
+
     # Model parameters
     layer_sizes = [1,10,10,1]
     L2_reg, dropout_rate = 0.0, 0.1
@@ -84,57 +88,13 @@ if __name__ == '__main__':
     objective_grad = grad(objective)
     objective_grad_dropout = grad(objective_dropout)
 
-    # Set up figures.
-    fig1 = plt.figure(figsize=(12, 8), facecolor='white')
-    ax2 = fig1.add_subplot(212, frameon=False)
-    ax = fig1.add_subplot(211, frameon=False)
-    plt.ion()
-    plt.show(block=False)
-
     testcostlist = []
     testcostlist_dropout = []
     traincostlist = []
     iterlist = []
 
     def print_function_dropout(params, iter, gradient):
-        random.seed(100)
-        plot_inputs = np.linspace(-8, 8, num=400)
-        use_dropout = False
-        test_time = True
-        print(params)
-        print(len(params))
-        outputs = neural_net_predict(params, np.expand_dims(plot_inputs, 1), use_dropout, test_time)
-
-        # Plot data and functions.
-        plt.cla()
-        plt.title('Overfitting test with dropout rate = %f' % dropout_rate)
-        ax.set_xlabel("Possible Inputs")
-        ax.set_ylabel("Neural Network Outputs")
-        ax.plot(inputs, targets, 'bx', label='Train Data')
-        ax.plot(testinputs, testtargets, 'bo', label='Test Data')
-        ax.plot(plot_inputs, outputs)
-        ax.legend()
-        ax.set_ylim([-2, 3])
-
-        # # Plot the cost function for the test
-        testcost = np.sum((neural_net_predict(params, testinputs, use_dropout, test_time) - testtargets)**2)
-        traincost = np.sum((neural_net_predict(params, inputs, use_dropout, test_time) - targets)**2)
-        #diff = np.absolute(testcost - traincost)
-        testcostlist_dropout.append(testcost)
-        traincostlist.append(traincost)
-        iterlist.append(iter)
-        ax2.plot(iterlist, testcostlist_dropout, 'r-', label='Test Cost')
-        ax2.plot(iterlist, traincostlist, 'g-', label='Train Cost')
-        ax2.set_xlabel('Number of Iterations')
-        ax2.set_ylabel('Error in Estimation or Cost')
-        ax2.set_xlim([0, 200])
-        ax2.set_ylim([0, 20])
-        if iter == 0:
-            ax2.legend()
-
-        plt.draw()
-        #plt.savefig(str(dropout_rate*10) + str(iter) + '.jpg')
-        plt.pause(1.0/60.0)
+        return
 
     def print_function(params, iter, gradient):
         use_dropout = False
@@ -144,18 +104,26 @@ if __name__ == '__main__':
     # The optimizers provided can optimize lists, tuples, or dicts of parameters.
     optimized_params = adam(objective_grad, init_params, step_size=step_size,
                             num_iters=200, callback=print_function)
-    optimized_params_dropout = adam(objective_grad_dropout, init_params, step_size=step_size,
-                            num_iters=200, callback=print_function_dropout)
 
+    optimized_params_list = []
+    for i in range(len(seed_inputs)):
+        random.seed(seed_inputs[i])
+        optimized_params_list.append(adam(objective_grad_dropout, init_params, step_size=step_size, num_iters=200, callback=print_function_dropout))
 
-    # Set up figures.
-    fig2 = plt.figure(figsize=(12, 8), facecolor='white')
-    plt.title('Standard Test Cost vs. Dropout Test Cost, dropout rate=' + str(dropout_rate))
-    ax3 = fig2.add_subplot(111)
-    ax4 = fig2.add_subplot(111)
-    ax3.plot(iterlist, testcostlist_dropout, '-r', label="Dropout Test Cost")
-    ax4.plot(iterlist, testcostlist, '-b', label="Standard Test Cost")
-    ax3.legend()
-    ax4.legend()
-    plt.ion()
-    plt.show(block=False)
+    fig2, ax = plt.subplots()
+    plt.cla()
+    plt.title('Dropout Result Comparisons, dropout_rate:' + str(dropout_rate))
+    ax.set_xlabel("Possible Inputs")
+    ax.set_ylabel("Neural Network Outputs")
+    plot_inputs = np.linspace(-8, 8, num=400)
+    for i in range(len(seed_inputs)):
+        # Plot data and functions.
+        outputs = neural_net_predict(optimized_params_list[i], np.expand_dims(plot_inputs, 1), False, True)
+        ax.plot(inputs, targets, 'bx')
+        ax.plot(testinputs, testtargets, 'bo')
+        ax.plot(plot_inputs, outputs, label='random.seed(%i)' % seed_inputs[i])
+        ax.legend()
+        ax.set_ylim([-2, 3])
+        plt.draw()
+        plt.pause(1.0)
+    plt.show()
